@@ -26,6 +26,61 @@ limitations under the License.
 
     <script async="" src="https://cdn.ampproject.org/v0.js"></script>
 
+    <script>
+      window.baseUrlRequest = 'https://arenabtg.dev.angular-ecommerce.com'
+    </script>
+
+    <script src="https://static.angulare.app/web/v1.54.460/web-loader.js"  key="my-script" type="text/javascript" id="script-angulare"></script>
+
+    <script>
+
+    const loginComponentActive = ()=>{
+            var loginModal = undefined
+
+            loginModal = document.createElement('ae-login-modal')
+            loginModal.addEventListener('close', () => { loginModal.show = false })
+            loginModal.addEventListener('loginSuccess', () => { 
+              loginModal.show = false; 
+              const event = new CustomEvent('userCurrentReady', {
+                  detail: 'ok'
+              });              
+      
+             window.dispatchEvent(event);
+            })
+            loginModal.addEventListener('showSignup', () => { 
+              loginModal.show = false;
+              document.querySelector('ae-signup-modal').show = true
+            })
+            loginModal.addEventListener('showForgetPassword', () => { 
+              
+              let interval = setInterval(()=>{
+                if(document.querySelector('ae-forgot-password-modal')){
+                  clearInterval(interval)
+                  loginModal.show = false;
+                  setTimeout(()=>{
+                    document.querySelector('ae-forgot-password-modal').show = true
+                  })
+                }
+              }, 100)
+              
+            })
+
+
+            
+
+            document.body.appendChild(loginModal)
+    }
+
+
+    window.addEventListener('settingsReady', ()=>{
+                  
+      loginComponentActive()
+      
+    })
+        
+
+    </script>
+    
     <style amp-boilerplate="">
       body {
         -webkit-animation: -amp-start 8s steps(1, end) 0s 1 normal both;
